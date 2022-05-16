@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicGates.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,22 +10,37 @@ namespace LogicGates.Gates
 {
     public class CustomCircuit : CircuitBase
     {
-        public CustomCircuit(int inPins, string inName) : base(inPins, inName)
+        List<CircuitBase> Circuits;
+        List<Wire> Wires;
+        List<Input> Inputs;
+        Output Output;
+
+        public CustomCircuit() : base(4, "TEST")
         {
         }
 
-        public CustomCircuit(int inPins, string inName, Point pos) : base(inPins, inName)
+        public CustomCircuit(string inName, List<Input> inputs, Output output, List<CircuitBase> circuits,
+            List<Wire> wires)
+            : base(inputs.Count, inName)
         {
+            Output = output;
+            Inputs = inputs;
+            Circuits = circuits;
+            Wires = wires;
         }
 
         public override CircuitBase GetInstance(Point pos)
         {
-            return new CustomCircuit(NumOfInputPins, Name, pos);
+            var res = new CustomCircuit();
+            res.Wires = new List<Wire>();
+            res.Wires.Add(new Wire(InputPins[0], OutputPin));
+
+            return res;
         }
 
         public override void Run()
         {
-            OutputPin.SetStatus(false);
+            OutputPin.SetStatus(this.InputPins[0].GetStatus());
         }
     }
 }

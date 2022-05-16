@@ -30,6 +30,7 @@
         {
             this.TestButton = new System.Windows.Forms.Button();
             this.GatesPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.SaveCircuit_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TestButton
@@ -49,6 +50,16 @@
             this.GatesPanel.Size = new System.Drawing.Size(161, 670);
             this.GatesPanel.TabIndex = 0;
             // 
+            // SaveCircuit_button
+            // 
+            this.SaveCircuit_button.Location = new System.Drawing.Point(12, 659);
+            this.SaveCircuit_button.Name = "SaveCircuit_button";
+            this.SaveCircuit_button.Size = new System.Drawing.Size(74, 25);
+            this.SaveCircuit_button.TabIndex = 2;
+            this.SaveCircuit_button.Text = "Save";
+            this.SaveCircuit_button.UseVisualStyleBackColor = true;
+            this.SaveCircuit_button.Click += new System.EventHandler(this.SaveCircuit_button_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -56,6 +67,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.ClientSize = new System.Drawing.Size(1144, 681);
+            this.Controls.Add(this.SaveCircuit_button);
             this.Controls.Add(this.TestButton);
             this.Controls.Add(this.GatesPanel);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -68,6 +80,7 @@
         #endregion
         private System.Windows.Forms.FlowLayoutPanel GatesPanel;
         private System.Windows.Forms.Button TestButton;
+        private System.Windows.Forms.Button SaveCircuit_button;
     }
 }
 

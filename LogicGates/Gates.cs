@@ -39,6 +39,7 @@ namespace LogicGates
 
         private void LoadGates()
         {
+            GatesPanel.Controls.Clear();
             int x = 5;
             int y = 5;
             foreach(var gate in DefaultGates)
@@ -65,6 +66,19 @@ namespace LogicGates
         private void TestButton_Click(object sender, EventArgs e)
         {
             CircuitEdit.Testing();
+        }
+
+        private void SaveCircuit_button_Click(object sender, EventArgs e)
+        {
+            DefaultGates.Add(CircuitEdit.Save());
+            CircuitEdit.Dispose();
+
+            LoadGates();
+            CircuitEdit = new CircuitEditor();
+            CircuitEdit.Location = new Point(12, 12);
+            CircuitEdit.Size = new Size(959, 643);
+            CircuitEdit.BackColor = Color.FromArgb(30, 30, 30);
+            this.Controls.Add(CircuitEdit);
         }
     }
 }

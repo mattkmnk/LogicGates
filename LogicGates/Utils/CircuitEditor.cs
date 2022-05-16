@@ -11,8 +11,10 @@ namespace LogicGates.Utils
 {
     public class CircuitEditor : Panel
     {
+        List<Input> Inputs;
         List<CircuitBase> Map;
         List<Wire> Wires;
+        Output Output;
         bool IsWiring = false;
         OutputPin WiringFrom = null;
         InputPin WiringTo = null;
@@ -21,7 +23,24 @@ namespace LogicGates.Utils
         {
             Map = new List<CircuitBase>();
             Wires = new List<Wire>();
+            Inputs = new List<Input>();
+            Output = new Output(new Point(919, 320));
+            this.Controls.Add(new CircuitGraphics(Output, Output.Position));
+            Output.InputPins[0].MouseClick += new MouseEventHandler(Button_MouseClick);
             this.Paint += new System.Windows.Forms.PaintEventHandler(DrawWires);
+            for (int i = 0; i < 4; ++i)
+            {
+                Inputs.Add(new Input(new Point(0, 200 * i)));
+                this.Controls.Add(new CircuitGraphics(Inputs[i], Inputs[i].Position));
+                Inputs[i].InputPins[0].MouseClick += new MouseEventHandler(Button_MouseClick);
+                Inputs[i].OutputPin.MouseClick += new MouseEventHandler(BeginWiring);
+            }
+        }
+
+        public CustomCircuit Save()
+        {
+            var temp = new CustomCircuit("TEST", Inputs, Output, Map, Wires);
+            return temp;
         }
 
         public void Add_Gate(object sender, EventArgs e)
@@ -40,6 +59,7 @@ namespace LogicGates.Utils
             {
                 pin.MouseClick += new MouseEventHandler(Button_MouseClick);
             }
+            gate.Run();
         }
 
         private void Button_MouseClick(object sender, MouseEventArgs e)
@@ -75,16 +95,16 @@ namespace LogicGates.Utils
             foreach (var wire in Wires)
             {
                 var sscreen = this.PointToScreen(wire.From.Location);
-                var escreen = this.PointToScreen(wire.To.Location);
-
                 var start = wire.From.PointToScreen(wire.From.Location);
-                var end = wire.To.PointToScreen(wire.To.Location);
-
                 start = new Point(start.X - sscreen.X + 10, start.Y - sscreen.Y + 10);
+
+                var escreen = this.PointToScreen(wire.To.Location);
+                var end = wire.To.PointToScreen(wire.To.Location);
                 end = new Point(end.X - escreen.X + 10, end.Y - escreen.Y + 10);
 
                 var color = wire.Status ? Color.Green : Color.Red;
                 e.Graphics.DrawLine(new Pen(color, 2), start, end);
+
             }
         }
 

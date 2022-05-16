@@ -13,7 +13,7 @@ namespace LogicGates.Utils
     {
 
         bool Status;
-        CircuitBase ParentGate;
+        public CircuitBase ParentGate;
 
         public InputPin(Point pos, CircuitBase gate)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,7 +12,7 @@ namespace LogicGates.Utils
     public class OutputPin : Button
     {
         bool Status;
-        Wire Wire = null;
+        List<Wire> Wires = new List<Wire>();
 
         public OutputPin(Point pos)
         {
@@ -29,15 +30,16 @@ namespace LogicGates.Utils
         {
             Status = status;
             this.BackColor = Status ? Color.Green : Color.Red;
-            if (Wire != null)
+
+            foreach(var wire in Wires)
             {
-                Wire.Propagate();
+                wire.Propagate();
             }
         }
 
         public void SetWire(Wire wire)
         {
-            Wire = wire;
+            Wires.Add(wire);
         }
 
         public bool GetStatus()

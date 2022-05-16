@@ -58,8 +58,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Gates\CustomCircuit.cs" />
+    <Compile Include="Gates\Input.cs" />
     <Compile Include="Gates\NAND.cs" />
     <Compile Include="Gates\OR.cs" />
+    <Compile Include="Gates\Output.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\BlueprintButton.cs">
