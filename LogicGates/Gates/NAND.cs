@@ -4,30 +4,29 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace LogicGates.Gates
 {
-    public class AND : CircuitBase
+    public class NAND : CircuitBase
     {
-        public AND() : base(2, "AND")
+        public NAND() : base(2, "NAND")
         {
 
         }
 
-        public AND(Point pos) : base(2, "AND")
+        public NAND(Point pos) : base(2, "NAND")
         {
 
         }
 
         public override CircuitBase GetInstance(Point pos)
         {
-            return new AND(pos);
+            return new NAND(pos);
         }
 
         public override void Run()
         {
-            var res = InputPins[0].GetStatus() && InputPins[1].GetStatus();
+            var res = !(InputPins[0].GetStatus() && InputPins[1].GetStatus());
             if (res != Status)
             {
                 OutputPin.SetStatus(res);

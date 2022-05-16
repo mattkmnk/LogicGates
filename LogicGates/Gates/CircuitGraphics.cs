@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicGates.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace LogicGates.Gates
     {
 
         CircuitBase Gate;
+        
 
         public CircuitGraphics(CircuitBase inGate, Point pos)
         {
@@ -28,6 +30,8 @@ namespace LogicGates.Gates
 
             this.Controls.Add(Gate.OutputPin);
         }
+
+        
 
         public void SetPosition(int X, int Y)
         {

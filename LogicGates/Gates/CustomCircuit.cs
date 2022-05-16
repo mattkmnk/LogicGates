@@ -21,5 +21,10 @@ namespace LogicGates.Gates
         {
             return new CustomCircuit(NumOfInputPins, Name, pos);
         }
+
+        public override void Run()
+        {
+            OutputPin.SetStatus(false);
+        }
     }
 }

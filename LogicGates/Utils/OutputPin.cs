@@ -11,10 +11,11 @@ namespace LogicGates.Utils
     public class OutputPin : Button
     {
         bool Status;
+        Wire Wire = null;
 
         public OutputPin(Point pos)
         {
-            Status = false;
+            SetStatus(false);
 
             this.Size = new Size(20, 20);
             this.Location = pos;
@@ -28,6 +29,20 @@ namespace LogicGates.Utils
         {
             Status = status;
             this.BackColor = Status ? Color.Green : Color.Red;
+            if (Wire != null)
+            {
+                Wire.Propagate();
+            }
+        }
+
+        public void SetWire(Wire wire)
+        {
+            Wire = wire;
+        }
+
+        public bool GetStatus()
+        {
+            return Status;
         }
 
         public void SwitchStatus()

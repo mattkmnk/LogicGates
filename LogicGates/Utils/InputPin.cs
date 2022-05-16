@@ -52,5 +52,12 @@ namespace LogicGates.Utils
         {
             this.BackColor = color;
         }
+
+        public Point GetCentre()
+        {
+            var x = ParentGate.Position.X + this.Location.X + 10;
+            var y = ParentGate.Position.Y + this.Location.Y + 10;
+            return new Point(x, y);
+        }
     }
 }

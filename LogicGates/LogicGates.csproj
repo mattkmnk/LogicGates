@@ -58,6 +58,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Gates\CustomCircuit.cs" />
+    <Compile Include="Gates\NAND.cs" />
     <Compile Include="Gates\OR.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Utils\OutputPin.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\Wire.cs" />
     <EmbeddedResource Include="Gates.resx">
       <DependentUpon>Gates.cs</DependentUpon>
     </EmbeddedResource>

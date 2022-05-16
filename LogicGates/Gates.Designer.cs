@@ -28,20 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.MainboardPanel = new System.Windows.Forms.Panel();
             this.TestButton = new System.Windows.Forms.Button();
             this.GatesPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
-            // 
-            // MainboardPanel
-            // 
-            this.MainboardPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.MainboardPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MainboardPanel.Location = new System.Drawing.Point(12, 12);
-            this.MainboardPanel.Name = "MainboardPanel";
-            this.MainboardPanel.Size = new System.Drawing.Size(959, 643);
-            this.MainboardPanel.TabIndex = 0;
-            this.MainboardPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainboardPanel_Paint);
             // 
             // TestButton
             // 
@@ -69,7 +58,6 @@
             this.ClientSize = new System.Drawing.Size(1144, 681);
             this.Controls.Add(this.TestButton);
             this.Controls.Add(this.GatesPanel);
-            this.Controls.Add(this.MainboardPanel);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Name = "MainWindow";
             this.Text = "Form1";
@@ -78,8 +66,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel MainboardPanel;
         private System.Windows.Forms.FlowLayoutPanel GatesPanel;
         private System.Windows.Forms.Button TestButton;
     }

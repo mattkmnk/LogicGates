@@ -24,5 +24,15 @@ namespace LogicGates.Gates
         {
             return new OR(pos);
         }
+
+        public override void Run()
+        {
+            var res = InputPins[0].GetStatus() || InputPins[1].GetStatus();
+            if (res != Status)
+            {
+                OutputPin.SetStatus(res);
+                Status = res;
+            }
+        }
     }
 }

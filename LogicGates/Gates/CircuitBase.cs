@@ -14,7 +14,7 @@ namespace LogicGates.Gates
         public Point Position { get; set; }
         protected string Name;
         public int NumOfInputPins { get; set; }
-        protected bool Status;
+        protected bool Status = false;
         public List<InputPin> InputPins { get; set; }
         public OutputPin OutputPin { get; set; }
         public Size Size;
@@ -31,6 +31,7 @@ namespace LogicGates.Gates
                 InputPins.Add(new InputPin(new Point(this.Position.X, this.Position.Y + i * 20), this));
             }
             OutputPin = new OutputPin(new Point(60, Size.Height / 2 - 10));
+            Run();
         }
 
         public string GetName()
@@ -50,9 +51,6 @@ namespace LogicGates.Gates
 
         public abstract CircuitBase GetInstance(Point pos);
 
-        public virtual void Run()
-        {
-
-        }
+        public abstract void Run();
     }
 }
