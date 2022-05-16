@@ -32,15 +32,21 @@ namespace LogicGates.Gates
         public override CircuitBase GetInstance(Point pos)
         {
             var res = new CustomCircuit();
-            res.Wires = new List<Wire>();
-            res.Wires.Add(new Wire(InputPins[0], OutputPin));
+            res.Wires = this.Wires;
+            res.Inputs = this.Inputs;
+            res.Circuits = this.Circuits;
+            res.Output = this.Output;
 
             return res;
         }
 
         public override void Run()
         {
-            OutputPin.SetStatus(this.InputPins[0].GetStatus());
+            for (int i = 0; i < 4; ++i)
+            {
+                Inputs[i].InputPins[0].SetStatus(InputPins[i].GetStatus());
+                OutputPin.SetStatus(Output.OutputPin.GetStatus());
+            }
         }
     }
 }

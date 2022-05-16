@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace LogicGates.Utils
 {
-    public class InputPin : Button
+    public class InputPin : Pin
     {
 
         bool Status;
@@ -29,12 +29,12 @@ namespace LogicGates.Utils
             this.FlatAppearance.BorderSize = 0;
         }
 
-        public bool GetStatus()
+        public override bool GetStatus()
         {
             return Status;
         }
 
-        public void SetStatus(bool status)
+        public override void SetStatus(bool status)
         {
             Status = status;
             this.BackColor = status ? Color.Green : Color.Red;

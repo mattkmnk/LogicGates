@@ -73,6 +73,9 @@
     <Compile Include="Utils\InputPin.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\Pin.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\OutputPin.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -12,11 +12,11 @@ namespace LogicGates.Utils
     {
         public event WireNotify WireChangedStatus;
 
-        public OutputPin From;
-        public InputPin To;
+        public Pin From;
+        public Pin To;
         public bool Status;
 
-        public Wire(OutputPin from, InputPin to)
+        public Wire(Pin from, Pin to)
         {
             From = from;
             To = to;

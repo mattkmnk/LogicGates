@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace LogicGates.Utils
 {
-    public class OutputPin : Button
+    public class OutputPin : Pin
     {
         bool Status;
         List<Wire> Wires = new List<Wire>();
@@ -26,7 +26,7 @@ namespace LogicGates.Utils
             this.FlatAppearance.BorderSize = 0;
         }
 
-        public void SetStatus(bool status)
+        public override void SetStatus(bool status)
         {
             Status = status;
             this.BackColor = Status ? Color.Green : Color.Red;
@@ -42,7 +42,7 @@ namespace LogicGates.Utils
             Wires.Add(wire);
         }
 
-        public bool GetStatus()
+        public override bool GetStatus()
         {
             return Status;
         }
