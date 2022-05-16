@@ -4,25 +4,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace LogicGates.Gates
 {
-    class OR : CircuitBase
+    public class CustomCircuit : CircuitBase
     {
-        public OR() : base(2, "OR")
+        public CustomCircuit(int inPins, string inName) : base(inPins, inName)
         {
-
         }
 
-        public OR(Point pos) : base(2, "OR")
+        public CustomCircuit(int inPins, string inName, Point pos) : base(inPins, inName)
         {
-
         }
 
         public override CircuitBase GetInstance(Point pos)
         {
-            return new OR(pos);
+            return new CustomCircuit(NumOfInputPins, Name, pos);
         }
     }
 }

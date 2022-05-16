@@ -46,22 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gates\AND.cs" />
-    <Compile Include="Gates\BinaryGate.cs" />
-    <Compile Include="Gates\Gate.cs" />
     <Compile Include="Gates.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Gates.Designer.cs">
       <DependentUpon>Gates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gates\AND.cs" />
+    <Compile Include="Gates\CircuitBase.cs" />
+    <Compile Include="Gates\CircuitGraphics.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Gates\CustomCircuit.cs" />
     <Compile Include="Gates\OR.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\BlueprintButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Utils\Circuit.cs">
+    <Compile Include="Utils\CircuitEditor.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Utils\InputPin.cs">

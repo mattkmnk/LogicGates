@@ -14,15 +14,16 @@ namespace LogicGates
 {
     public partial class MainWindow : Form
     {
-        List<Gate> DefaultGates;
-        List<Gate> Map;
+        List<CircuitBase> DefaultGates;
+        List<CircuitBase> Map;
 
         public MainWindow()
         {
-            DefaultGates = new List<Gate>();
-            Map = new List<Gate>();
+            DefaultGates = new List<CircuitBase>();
+            Map = new List<CircuitBase>();
             DefaultGates.Add(new AND());
             DefaultGates.Add(new OR());
+            DefaultGates.Add(new CustomCircuit(4, "TEST"));
             InitializeComponent();
             this.Text = "Logic Gates Simulator";
             LoadGates();
@@ -30,8 +31,8 @@ namespace LogicGates
 
         private void LoadGates()
         {
-            int x = GatesPanel.Location.X + 5;
-            int y = GatesPanel.Location.Y + 5;
+            int x = 5;
+            int y = 5;
             foreach(var gate in DefaultGates)
             {
                 var btn = new BlueprintButton(gate);
@@ -53,37 +54,37 @@ namespace LogicGates
 
         private void Add_Gate(object sender, EventArgs e)
         {
-            BlueprintButton button = (BlueprintButton)sender;
-            Gate gate = button.GetGate(MainboardPanel);
-            gate.SetPosition(new Point(10, 10));
+            BlueprintButton button = sender as BlueprintButton;
+            var gate = button.GetGate();
             Map.Add(gate);
-
-            MainboardPanel.AllowDrop = true;
-            MainboardPanel.Controls.Add(gate.GetBody());
-            gate.GetBody().MouseDown += new MouseEventHandler(GateHitbox_MouseDown);
-            MainboardPanel.DragOver += new DragEventHandler(Circuit_DragOver);
-            MainboardPanel.DragDrop += new DragEventHandler(Circuit_DragDrop);
+            var graphics = new CircuitGraphics(gate, new Point(50, 50));
+            graphics.MouseDown += new MouseEventHandler(GateHitbox_MouseDown);
+            graphics.MouseUp += new MouseEventHandler(GateHitbox_MouseUp);
+            graphics.MouseMove += new MouseEventHandler(GateHitbox_MouseMove);
+            MainboardPanel.Controls.Add(graphics);
         }
 
-        private void Circuit_DragDrop(object sender, DragEventArgs e)
-        {
-            Control c = e.Data.GetData(e.Data.GetFormats()[0]) as Control;
-            if (c != null)
-            {
-                c.Location = MainboardPanel.PointToClient(new Point(e.X, e.Y));
-                MainboardPanel.Controls.Add(c);
-            }
-        }
+        Point MouseDownLocation;
+        bool selected = false;
 
-        private void Circuit_DragOver(object sender, DragEventArgs e)
+        private void GateHitbox_MouseUp(object sender, MouseEventArgs e)
         {
-            e.Effect = DragDropEffects.Move;
+            selected = false;
         }
 
         private void GateHitbox_MouseDown(object sender, MouseEventArgs e)
         {
-            Control c = sender as Control;
-            c.DoDragDrop(c, DragDropEffects.Move);
+            MouseDownLocation = e.Location;
+            selected = true;
+        }
+
+        private void GateHitbox_MouseMove(object sender, MouseEventArgs e)
+        {
+            CircuitGraphics p = sender as CircuitGraphics;
+            if (p != null && selected)
+            {
+                p.SetPosition((e.X - MouseDownLocation.X), (e.Y - MouseDownLocation.Y));
+            }
         }
 
         private void TestButton_Click(object sender, EventArgs e)

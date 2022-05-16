@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicGates.Gates;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,20 +11,20 @@ namespace LogicGates.Utils
 {
     class BlueprintButton : Button
     {
-        Gate gate;
+        CircuitBase Gate;
 
-        public BlueprintButton(Gate gate)
+        public BlueprintButton(CircuitBase gate)
         {
-            this.gate = gate;
+            this.Gate = gate;
             this.Text = "Hello";
             this.TabStop = false;
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
         }
 
-        public Gate GetGate(Panel panel)
+        public CircuitBase GetGate()
         {
-            return gate.GetInstance(new Point(10, 10), panel);
+            return Gate.GetInstance(new Point(10, 10));
         }
 
     }

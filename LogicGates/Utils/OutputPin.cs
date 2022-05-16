@@ -16,7 +16,7 @@ namespace LogicGates.Utils
         {
             Status = false;
 
-            this.Size = new Size(20, 40);
+            this.Size = new Size(20, 20);
             this.Location = pos;
             this.Text = "O";
             this.TabStop = false;

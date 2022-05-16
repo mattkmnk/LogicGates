@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicGates.Gates;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace LogicGates.Utils
     {
 
         bool Status;
-        Gate ParentGate;
+        CircuitBase ParentGate;
 
-        public InputPin(Point pos, Gate gate)
+        public InputPin(Point pos, CircuitBase gate)
         {
             ParentGate = gate;
             Status = false;

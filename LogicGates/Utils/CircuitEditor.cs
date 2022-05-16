@@ -7,8 +7,11 @@ using System.Windows.Forms;
 
 namespace LogicGates.Utils
 {
-    class Circuit : Panel
+    public class CircuitEditor : Panel
     {
+        public CircuitEditor(int width, int height) : base()
+        {
 
+        }
     }
 }
