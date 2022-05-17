@@ -24,16 +24,31 @@ namespace LogicGates.Utils
             Map = new List<CircuitBase>();
             Wires = new List<Wire>();
             Inputs = new List<Input>();
-            Output = new Output(new Point(919, 320));
-            this.Controls.Add(new CircuitGraphics(Output, Output.Position));
+
+            Output = new Output(new Point(920, 300));
             Output.InputPins[0].MouseClick += new MouseEventHandler(Button_MouseClick);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(DrawWires);
-            for (int i = 0; i < 4; ++i)
+
+            this.Paint += new PaintEventHandler(DrawWires);
+            CreateInputsOutputs(0);
+        }
+
+        public void CreateInputsOutputs(int n)
+        {
+            this.Controls.Clear();
+            Inputs.Clear();
+            for (int i = 0; i < n; ++i)
             {
-                Inputs.Add(new Input(new Point(0, 200 * i)));
+                Inputs.Add(new Input(new Point(0, (640/n) * i + 20)));
                 this.Controls.Add(new CircuitGraphics(Inputs[i], Inputs[i].Position));
                 Inputs[i].InputPins[0].MouseClick += new MouseEventHandler(Button_MouseClick);
                 Inputs[i].OutputPin.MouseClick += new MouseEventHandler(BeginWiring);
+            }
+
+            this.Controls.Add(new CircuitGraphics(Output, Output.Position));
+
+            foreach(var gate in Map)
+            {
+                Draw_Gate(gate);
             }
         }
 
@@ -47,19 +62,25 @@ namespace LogicGates.Utils
         {
             BlueprintButton button = sender as BlueprintButton;
             var gate = button.GetGate();
+            gate.Position = new Point(50, 50);
             Map.Add(gate);
-            var graphics = new CircuitGraphics(gate, new Point(50, 50));
-            graphics.MouseDown += new MouseEventHandler(GateHitbox_MouseDown);
-            graphics.MouseUp += new MouseEventHandler(GateHitbox_MouseUp);
-            graphics.MouseMove += new MouseEventHandler(GateHitbox_MouseMove);
-            this.Controls.Add(graphics);
+            Draw_Gate(gate);
 
             gate.OutputPin.MouseClick += new MouseEventHandler(BeginWiring);
-            foreach(var pin in gate.InputPins)
+            foreach (var pin in gate.InputPins)
             {
                 pin.MouseClick += new MouseEventHandler(Button_MouseClick);
             }
             gate.Run();
+        }
+
+        private void Draw_Gate(CircuitBase gate)
+        {
+            var graphics = new CircuitGraphics(gate, new Point(gate.Position.X, gate.Position.Y));
+            graphics.MouseDown += new MouseEventHandler(GateHitbox_MouseDown);
+            graphics.MouseUp += new MouseEventHandler(GateHitbox_MouseUp);
+            graphics.MouseMove += new MouseEventHandler(GateHitbox_MouseMove);
+            this.Controls.Add(graphics);
         }
 
         private void Button_MouseClick(object sender, MouseEventArgs e)
@@ -141,10 +162,11 @@ namespace LogicGates.Utils
         public void Testing()
         {
             string res = "";
-            foreach (var val in Wires)
+            foreach (var val in Map)
             {
-                res += $"{val} at ()\n";
+                res += $"{val} at ({val.Position.X}, {val.Position.Y})\n";
             }
+            res += $"This form size: {Output.Position.X} x {Output.Position.Y}";
             MessageBox.Show(res);
         }
     }

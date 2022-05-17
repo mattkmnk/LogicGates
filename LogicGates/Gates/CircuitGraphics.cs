@@ -37,7 +37,7 @@ namespace LogicGates.Gates
         {
             this.Top += Y;
             this.Left += X;
-            Gate.Position = new Point(this.Top, this.Left);
+            Gate.Position = new Point(this.Left, this.Top);
         }
     }
 }

@@ -25,13 +25,13 @@ namespace LogicGates
 
             DefaultGates.Add(new AND());
             DefaultGates.Add(new OR());
-            DefaultGates.Add(new NAND());
+            DefaultGates.Add(new NOT());
             
             this.Text = "Logic Gates Simulator";
 
             CircuitEdit = new CircuitEditor();
             CircuitEdit.Location = new Point(12, 12);
-            CircuitEdit.Size = new Size(959, 643);
+            CircuitEdit.Size = new Size(960, 643);
             CircuitEdit.BackColor = Color.FromArgb(30, 30, 30);
             this.Controls.Add(CircuitEdit);
             LoadGates();
@@ -70,15 +70,23 @@ namespace LogicGates
 
         private void SaveCircuit_button_Click(object sender, EventArgs e)
         {
-            DefaultGates.Add(CircuitEdit.Save());
+            var newCircuit = CircuitEdit.Save();
+            newCircuit.Name = CircuitName_TextBox.Text;
+            DefaultGates.Add(newCircuit);
             CircuitEdit.Dispose();
 
             LoadGates();
             CircuitEdit = new CircuitEditor();
             CircuitEdit.Location = new Point(12, 12);
-            CircuitEdit.Size = new Size(959, 643);
+            CircuitEdit.Size = new Size(960, 640);
             CircuitEdit.BackColor = Color.FromArgb(30, 30, 30);
             this.Controls.Add(CircuitEdit);
+            NumOfInputs_NumericUpDown.Value = 0;
+        }
+
+        private void NumOfInputs_NumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            CircuitEdit.CreateInputsOutputs((int)NumOfInputs_NumericUpDown.Value);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace LogicGates.Gates
         List<Input> Inputs;
         Output Output;
 
-        public CustomCircuit() : base(4, "TEST")
+        public CustomCircuit(int numOfPins) : base(numOfPins, "TEST")
         {
         }
 
@@ -31,7 +31,7 @@ namespace LogicGates.Gates
 
         public override CircuitBase GetInstance(Point pos)
         {
-            var res = new CustomCircuit();
+            var res = new CustomCircuit(this.Inputs.Count);
             res.Wires = this.Wires;
             res.Inputs = this.Inputs;
             res.Circuits = this.Circuits;
@@ -42,7 +42,7 @@ namespace LogicGates.Gates
 
         public override void Run()
         {
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < Inputs.Count; ++i)
             {
                 Inputs[i].InputPins[0].SetStatus(InputPins[i].GetStatus());
                 OutputPin.SetStatus(Output.OutputPin.GetStatus());

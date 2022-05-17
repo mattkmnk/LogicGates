@@ -59,7 +59,7 @@
     </Compile>
     <Compile Include="Gates\CustomCircuit.cs" />
     <Compile Include="Gates\Input.cs" />
-    <Compile Include="Gates\NAND.cs" />
+    <Compile Include="Gates\NOT.cs" />
     <Compile Include="Gates\OR.cs" />
     <Compile Include="Gates\Output.cs" />
     <Compile Include="Program.cs" />

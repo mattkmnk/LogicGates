@@ -12,7 +12,7 @@ namespace LogicGates.Gates
     public abstract class CircuitBase
     {
         public Point Position { get; set; }
-        protected string Name;
+        public string Name;
         public int NumOfInputPins { get; set; }
         public bool Status = false;
         public List<InputPin> InputPins { get; set; }

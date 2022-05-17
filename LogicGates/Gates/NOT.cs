@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace LogicGates.Gates
 {
-    public class NAND : CircuitBase
+    public class NOT : CircuitBase
     {
-        public NAND() : base(2, "NAND")
+        public NOT() : base(1, "NOT")
         {
 
         }
 
-        public NAND(Point pos) : base(2, "NAND")
+        public NOT(Point pos) : base(1, "AND")
         {
 
         }
 
         public override CircuitBase GetInstance(Point pos)
         {
-            return new NAND(pos);
+            return new NOT(pos);
         }
 
         public override void Run()
         {
-            var res = !(InputPins[0].GetStatus() && InputPins[1].GetStatus());
+            var res = !InputPins[0].GetStatus();
             if (res != Status)
             {
                 OutputPin.SetStatus(res);
