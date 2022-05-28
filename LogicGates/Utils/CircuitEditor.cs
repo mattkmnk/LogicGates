@@ -11,9 +11,9 @@ namespace LogicGates.Utils
 {
     public class CircuitEditor : Panel
     {
-        List<Input> Inputs;
-        List<CircuitBase> Map;
-        List<Wire> Wires;
+        List<Input> Inputs = new List<Input>();
+        List<CircuitBase> Map = new List<CircuitBase>();
+        List<Wire> Wires = new List<Wire>();
         Output Output;
         bool IsWiring = false;
         OutputPin WiringFrom = null;
@@ -21,9 +21,6 @@ namespace LogicGates.Utils
 
         public CircuitEditor()
         {
-            Map = new List<CircuitBase>();
-            Wires = new List<Wire>();
-            Inputs = new List<Input>();
 
             Output = new Output(new Point(920, 300));
             Output.InputPins[0].MouseClick += new MouseEventHandler(Button_MouseClick);
@@ -62,6 +59,7 @@ namespace LogicGates.Utils
         {
             BlueprintButton button = sender as BlueprintButton;
             var gate = button.GetGate();
+            gate.Name = button.Name;
             gate.Position = new Point(50, 50);
             Map.Add(gate);
             Draw_Gate(gate);

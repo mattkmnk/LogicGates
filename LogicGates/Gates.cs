@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +17,7 @@ namespace LogicGates
     {
         List<CircuitBase> DefaultGates;
         CircuitEditor CircuitEdit;
-        
+
 
         public MainWindow()
         {
@@ -26,7 +27,7 @@ namespace LogicGates
             DefaultGates.Add(new AND());
             DefaultGates.Add(new OR());
             DefaultGates.Add(new NOT());
-            
+
             this.Text = "Logic Gates Simulator";
 
             CircuitEdit = new CircuitEditor();
@@ -42,7 +43,7 @@ namespace LogicGates
             GatesPanel.Controls.Clear();
             int x = 5;
             int y = 5;
-            foreach(var gate in DefaultGates)
+            foreach (var gate in DefaultGates)
             {
                 var btn = new BlueprintButton(gate);
                 btn.Name = gate.GetName();
@@ -50,18 +51,27 @@ namespace LogicGates
                 btn.ForeColor = Color.White;
                 btn.Location = new Point(x, y);
                 btn.Size = new Size(GatesPanel.Size.Width - 10, 50);
-                btn.Click += Add_Gate;
+                btn.MouseDown += GateMouseClick;
                 GatesPanel.Controls.Add(btn);
                 y += 10;
             }
         }
 
-        private void Add_Gate(object sender, EventArgs e)
+        private void GateMouseClick(object sender, EventArgs e)
         {
-            CircuitEdit.Add_Gate(sender, e);
-        }
-
-        
+            var me = (MouseEventArgs)e;
+            switch(me.Button)
+            {
+                case MouseButtons.Left:
+                    CircuitEdit.Add_Gate(sender, e);
+                break;
+                case MouseButtons.Right:
+                    var thread = new Thread((sender as BlueprintButton).Precalculate);
+                    thread.Start();
+                break;
+            }
+            
+        } 
 
         private void TestButton_Click(object sender, EventArgs e)
         {
@@ -71,7 +81,14 @@ namespace LogicGates
         private void SaveCircuit_button_Click(object sender, EventArgs e)
         {
             var newCircuit = CircuitEdit.Save();
+            if(CircuitName_TextBox.Text.Length == 0)
+            {
+                CircuitName_TextBox.BackColor = Color.Red;
+                return;
+            }
+            CircuitName_TextBox.BackColor = Color.White;
             newCircuit.Name = CircuitName_TextBox.Text;
+            CircuitName_TextBox.Clear();
             DefaultGates.Add(newCircuit);
             CircuitEdit.Dispose();
 

@@ -22,6 +22,11 @@ namespace LogicGates.Utils
             this.FlatAppearance.BorderSize = 0;
         }
 
+        public void Precalculate()
+        {
+            Gate.PrecalculateValues();
+        }
+
         public CircuitBase GetGate()
         {
             return Gate.GetInstance(new Point(10, 10));

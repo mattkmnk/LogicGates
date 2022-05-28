@@ -25,7 +25,7 @@ namespace LogicGates.Gates
             return new OR(pos);
         }
 
-        public override void Run()
+        public override int Run()
         {
             var res = InputPins[0].GetStatus() || InputPins[1].GetStatus();
             if (res != Status)
@@ -33,6 +33,7 @@ namespace LogicGates.Gates
                 OutputPin.SetStatus(res);
                 Status = res;
             }
+            return OutputPin.GetStatus() ? 1 : 0;
         }
     }
 }

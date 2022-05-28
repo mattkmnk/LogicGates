@@ -79,6 +79,7 @@
     <Compile Include="Utils\OutputPin.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\ResultTable.cs" />
     <Compile Include="Utils\Wire.cs" />
     <EmbeddedResource Include="Gates.resx">
       <DependentUpon>Gates.cs</DependentUpon>

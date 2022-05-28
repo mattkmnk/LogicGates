@@ -14,7 +14,7 @@ namespace LogicGates.Gates
 
         }
 
-        public NOT(Point pos) : base(1, "AND")
+        public NOT(Point pos) : base(1, "NOT")
         {
 
         }
@@ -24,7 +24,7 @@ namespace LogicGates.Gates
             return new NOT(pos);
         }
 
-        public override void Run()
+        public override int Run()
         {
             var res = !InputPins[0].GetStatus();
             if (res != Status)
@@ -32,6 +32,7 @@ namespace LogicGates.Gates
                 OutputPin.SetStatus(res);
                 Status = res;
             }
+            return OutputPin.GetStatus() ? 1 : 0;
         }
     }
 }

@@ -51,6 +51,11 @@ namespace LogicGates.Gates
 
         public abstract CircuitBase GetInstance(Point pos);
 
-        public abstract void Run();
+        public abstract int Run();
+
+        public virtual void PrecalculateValues()
+        {
+
+        }
     }
 }

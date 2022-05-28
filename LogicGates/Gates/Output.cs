@@ -31,10 +31,11 @@ namespace LogicGates.Gates
             return new Output(Position);
         }
 
-        public override void Run()
+        public override int Run()
         {
             OutputPin.SetStatus(InputPins[0].GetStatus());
             this.Status = InputPins[0].GetStatus();
+            return OutputPin.GetStatus() ? 1 : 0;
         }
     }
 }

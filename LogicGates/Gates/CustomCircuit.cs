@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LogicGates.Gates
 {
@@ -14,6 +15,8 @@ namespace LogicGates.Gates
         List<Wire> Wires;
         List<Input> Inputs;
         Output Output;
+
+        static Dictionary<string, ResultTable> PrecalcTable = new Dictionary<string, ResultTable>();
 
         public CustomCircuit(int numOfPins) : base(numOfPins, "TEST")
         {
@@ -40,12 +43,45 @@ namespace LogicGates.Gates
             return res;
         }
 
-        public override void Run()
+        public override void PrecalculateValues()
         {
-            for (int i = 0; i < Inputs.Count; ++i)
+            if (PrecalcTable.ContainsKey(this.Name)) return;
+            var Res = new ResultTable();
+            
+            for(int i = 0; i < this.Inputs.Count*this.Inputs.Count; ++i)
             {
-                Inputs[i].InputPins[0].SetStatus(InputPins[i].GetStatus());
-                OutputPin.SetStatus(Output.OutputPin.GetStatus());
+                for (int j = 0; j < this.Inputs.Count; ++j)
+                {
+                    var bin = Convert.ToString(i, 2).PadLeft(this.Inputs.Count, '0');
+                    InputPins[j].SetStatus(bin[j] == '1' ? true : false);
+                }
+                Res.Results.Add(i, this.Run());
+            }
+
+            PrecalcTable.Add(this.Name, Res);
+        }
+
+        public override int Run()
+        {
+            if (PrecalcTable.ContainsKey(this.Name))
+            {
+                int inSum = 0;
+                for(int i = 0; i < Inputs.Count; ++i)
+                {
+                    inSum += InputPins[i].GetStatus() ? (int)Math.Pow(2, i) : 0;
+                }
+                OutputPin.SetStatus(PrecalcTable[this.Name].Results[inSum] == 1 ? true : false);
+                return -1;
+            }
+            else
+            {
+                for (int i = 0; i < Inputs.Count; ++i)
+                {
+                    Inputs[i].InputPins[0].SetStatus(InputPins[i].GetStatus());
+                    OutputPin.SetStatus(Output.OutputPin.GetStatus());
+                }
+
+                return OutputPin.GetStatus() ? 1 : 0;
             }
         }
     }
