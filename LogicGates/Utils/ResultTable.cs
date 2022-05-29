@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogicGates.Utils
 {
-    class ResultTable
+    public class ResultTable
     {
         public Dictionary<int, int> Results = new Dictionary<int, int>();
     }

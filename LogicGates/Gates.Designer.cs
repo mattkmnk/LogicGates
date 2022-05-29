@@ -33,6 +33,7 @@
             this.SaveCircuit_button = new System.Windows.Forms.Button();
             this.CircuitName_TextBox = new System.Windows.Forms.TextBox();
             this.NumOfInputs_NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.LGStore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.NumOfInputs_NumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,7 +51,7 @@
             // 
             this.GatesPanel.Location = new System.Drawing.Point(977, 12);
             this.GatesPanel.Name = "GatesPanel";
-            this.GatesPanel.Size = new System.Drawing.Size(161, 670);
+            this.GatesPanel.Size = new System.Drawing.Size(161, 645);
             this.GatesPanel.TabIndex = 0;
             // 
             // SaveCircuit_button
@@ -78,6 +79,16 @@
             this.NumOfInputs_NumericUpDown.TabIndex = 4;
             this.NumOfInputs_NumericUpDown.ValueChanged += new System.EventHandler(this.NumOfInputs_NumericUpDown_ValueChanged);
             // 
+            // LGStore
+            // 
+            this.LGStore.Location = new System.Drawing.Point(1021, 658);
+            this.LGStore.Name = "LGStore";
+            this.LGStore.Size = new System.Drawing.Size(75, 23);
+            this.LGStore.TabIndex = 5;
+            this.LGStore.Text = "LGStore";
+            this.LGStore.UseVisualStyleBackColor = true;
+            this.LGStore.Click += new System.EventHandler(this.LGStore_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -85,6 +96,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.ClientSize = new System.Drawing.Size(1144, 681);
+            this.Controls.Add(this.LGStore);
             this.Controls.Add(this.NumOfInputs_NumericUpDown);
             this.Controls.Add(this.CircuitName_TextBox);
             this.Controls.Add(this.SaveCircuit_button);
@@ -105,6 +117,7 @@
         private System.Windows.Forms.Button SaveCircuit_button;
         private System.Windows.Forms.TextBox CircuitName_TextBox;
         private System.Windows.Forms.NumericUpDown NumOfInputs_NumericUpDown;
+        private System.Windows.Forms.Button LGStore;
     }
 }
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,27 +16,35 @@ namespace LogicGates
 {
     public partial class MainWindow : Form
     {
-        List<CircuitBase> DefaultGates;
+        List<CircuitBase> Gates;
         CircuitEditor CircuitEdit;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            DefaultGates = new List<CircuitBase>();
+            Gates = new List<CircuitBase>();
 
-            DefaultGates.Add(new AND());
-            DefaultGates.Add(new OR());
-            DefaultGates.Add(new NOT());
+            Gates.Add(new AND());
+            Gates.Add(new OR());
+            Gates.Add(new NOT());
 
             this.Text = "Logic Gates Simulator";
 
             CircuitEdit = new CircuitEditor();
+
+            GatesPanel.AutoScroll = false;
+            GatesPanel.HorizontalScroll.Enabled = false;
+            GatesPanel.HorizontalScroll.Visible = false;
+            GatesPanel.HorizontalScroll.Maximum = 0;
+            GatesPanel.AutoScroll = true;
+
             CircuitEdit.Location = new Point(12, 12);
             CircuitEdit.Size = new Size(960, 643);
             CircuitEdit.BackColor = Color.FromArgb(30, 30, 30);
             this.Controls.Add(CircuitEdit);
             LoadGates();
+
         }
 
         private void LoadGates()
@@ -43,7 +52,7 @@ namespace LogicGates
             GatesPanel.Controls.Clear();
             int x = 5;
             int y = 5;
-            foreach (var gate in DefaultGates)
+            foreach (var gate in Gates)
             {
                 var btn = new BlueprintButton(gate);
                 btn.Name = gate.GetName();
@@ -66,12 +75,44 @@ namespace LogicGates
                     CircuitEdit.Add_Gate(sender, e);
                 break;
                 case MouseButtons.Right:
-                    var thread = new Thread((sender as BlueprintButton).Precalculate);
-                    thread.Start();
+                    ContextMenuStrip cm = new ContextMenuStrip();
+                    ToolStripMenuItem precalc = new ToolStripMenuItem("Precalculate");
+                    precalc.Click += (sender2, e2) => Calculate_Click(sender2, e2, sender as BlueprintButton);
+
+                    cm.Items.Add(precalc);
+                    ((BlueprintButton)sender).ContextMenuStrip = cm;
                 break;
             }
             
         } 
+
+        private void Calculate_Click(object sender, EventArgs e, BlueprintButton button)
+        {
+            Calculate(button.GetGate());
+        }
+
+        private void Calculate(CircuitBase gate)
+        {
+            var thread = new Thread(gate.PrecalculateValues);
+            thread.Start();
+        }
+
+        private void SaveToDatabase_Click(object sender, EventArgs e, BlueprintButton button)
+        {
+            string res = "";
+            var gate = (CustomCircuit)button.GetGate();
+            string name = gate.GetName();
+            if (!gate.IsPrecalculated(name))
+                return;
+
+            var tab = gate.GetResultTable(name);
+            
+            for(int i = 0; i < tab.Results.Count; ++i)
+            {
+                res += i + " " + tab.Results[i] + "\n";
+            }
+            MessageBox.Show($"{res}");
+        }
 
         private void TestButton_Click(object sender, EventArgs e)
         {
@@ -89,7 +130,7 @@ namespace LogicGates
             CircuitName_TextBox.BackColor = Color.White;
             newCircuit.Name = CircuitName_TextBox.Text;
             CircuitName_TextBox.Clear();
-            DefaultGates.Add(newCircuit);
+            Gates.Add(newCircuit);
             CircuitEdit.Dispose();
 
             LoadGates();
@@ -104,6 +145,19 @@ namespace LogicGates
         private void NumOfInputs_NumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             CircuitEdit.CreateInputsOutputs((int)NumOfInputs_NumericUpDown.Value);
+        }
+
+        private void LGStore_Click(object sender, EventArgs e)
+        {
+            var store = new LGStore(Gates);
+            store.GateAdded += LoadGateFromDB;
+            store.Show();
+        }
+
+        private void LoadGateFromDB(CustomCircuit gate)
+        {
+            Gates.Add(gate);
+            LoadGates();
         }
     }
 }

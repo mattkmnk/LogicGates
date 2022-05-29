@@ -20,6 +20,10 @@ namespace LogicGates.Gates
 
         public CustomCircuit(int numOfPins) : base(numOfPins, "TEST")
         {
+            Inputs = new List<Input>();
+            Inputs.Add(new Input());
+            Inputs.Add(new Input());
+            Output = new Output();
         }
 
         public CustomCircuit(string inName, List<Input> inputs, Output output, List<CircuitBase> circuits,
@@ -35,6 +39,7 @@ namespace LogicGates.Gates
         public override CircuitBase GetInstance(Point pos)
         {
             var res = new CustomCircuit(this.Inputs.Count);
+            res.Name = this.Name;
             res.Wires = this.Wires;
             res.Inputs = this.Inputs;
             res.Circuits = this.Circuits;
@@ -43,12 +48,22 @@ namespace LogicGates.Gates
             return res;
         }
 
+        public bool IsPrecalculated(string name)
+        {
+            return PrecalcTable.ContainsKey(name);
+        }
+
+        public ResultTable GetResultTable(string name)
+        {
+            return PrecalcTable[name];
+        }
+
         public override void PrecalculateValues()
         {
             if (PrecalcTable.ContainsKey(this.Name)) return;
             var Res = new ResultTable();
             
-            for(int i = 0; i < this.Inputs.Count*this.Inputs.Count; ++i)
+            for(int i = 0; i < Math.Pow(2, InputPins.Count); ++i)
             {
                 for (int j = 0; j < this.Inputs.Count; ++j)
                 {
@@ -83,6 +98,11 @@ namespace LogicGates.Gates
 
                 return OutputPin.GetStatus() ? 1 : 0;
             }
+        }
+
+        public void SetPrecalculatedTable(string name, ResultTable res)
+        {
+            PrecalcTable.Add(name, res);
         }
     }
 }
