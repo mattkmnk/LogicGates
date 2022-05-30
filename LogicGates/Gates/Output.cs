@@ -11,19 +11,19 @@ namespace LogicGates.Gates
     public class Output : CircuitBase
     {
 
-        public Output() : base(1, "O")
+        public Output() : base(1, 1, "O")
         {
             this.Size = new Size(40, 20);
             InputPins.Add(new InputPin(new Point(0, 0), this));
-            OutputPin = new OutputPin(new Point(20, 0));
+            OutputPins.Add(new OutputPin(new Point(20, 0)));
         }
 
-        public Output(Point pos) : base(1, "O")
+        public Output(Point pos)
         {
             this.Position = pos;
             this.Size = new Size(40, 20);
             InputPins.Add(new InputPin(new Point(0, 0), this));
-            OutputPin = new OutputPin(new Point(20, 0));
+            OutputPins.Add(new OutputPin(new Point(20, 0)));
         }
 
         public override CircuitBase GetInstance(Point pos)
@@ -33,9 +33,9 @@ namespace LogicGates.Gates
 
         public override int Run()
         {
-            OutputPin.SetStatus(InputPins[0].GetStatus());
+            OutputPins[0].SetStatus(InputPins[0].GetStatus());
             this.Status = InputPins[0].GetStatus();
-            return OutputPin.GetStatus() ? 1 : 0;
+            return OutputPins[0].GetStatus() ? 1 : 0;
         }
     }
 }

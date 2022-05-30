@@ -135,11 +135,17 @@ namespace LogicGates
             CircuitEdit.BackColor = Color.FromArgb(30, 30, 30);
             this.Controls.Add(CircuitEdit);
             NumOfInputs_NumericUpDown.Value = 0;
+            NumOfOutputs_NumericUpDown.Value = 0;
         }
 
         private void NumOfInputs_NumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            CircuitEdit.CreateInputsOutputs((int)NumOfInputs_NumericUpDown.Value);
+            CircuitEdit.CreateInputsOutputs((int)NumOfInputs_NumericUpDown.Value, (int)NumOfOutputs_NumericUpDown.Value);
+        }
+
+        private void NumOfOutputs_NumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            CircuitEdit.CreateInputsOutputs((int)NumOfInputs_NumericUpDown.Value, (int)NumOfOutputs_NumericUpDown.Value);
         }
 
         private void LGStore_Click(object sender, EventArgs e)
@@ -154,5 +160,7 @@ namespace LogicGates
             Gates.Add(gate);
             LoadGates();
         }
+
+        
     }
 }

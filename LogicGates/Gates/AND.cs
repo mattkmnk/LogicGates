@@ -10,12 +10,12 @@ namespace LogicGates.Gates
 {
     public class AND : CircuitBase
     {
-        public AND() : base(2, "AND")
+        public AND() : base(2, 1, "AND")
         {
 
         }
 
-        public AND(Point pos) : base(2, "AND")
+        public AND(Point pos) : base(2, 1, "AND")
         {
 
         }
@@ -30,10 +30,10 @@ namespace LogicGates.Gates
             var res = InputPins[0].GetStatus() && InputPins[1].GetStatus();
             if (res != Status)
             {
-                OutputPin.SetStatus(res);
+                OutputPins[0].SetStatus(res);
                 Status = res;
             }
-            return OutputPin.GetStatus() ? 1 : 0;
+            return OutputPins[0].GetStatus() ? 1 : 0;
         }
     }
 }

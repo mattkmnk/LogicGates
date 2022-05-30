@@ -28,7 +28,10 @@ namespace LogicGates.Gates
                 this.Controls.Add(pin);
             }
 
-            this.Controls.Add(Gate.OutputPin);
+            foreach (var pin in Gate.OutputPins)
+            {
+                this.Controls.Add(pin);
+            }
         }
 
         

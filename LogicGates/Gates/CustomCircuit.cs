@@ -14,23 +14,29 @@ namespace LogicGates.Gates
         List<CircuitBase> Circuits;
         List<Wire> Wires;
         List<Input> Inputs;
-        Output Output;
+        List<Output> Outputs;
 
         static Dictionary<string, ResultTable> PrecalcTable = new Dictionary<string, ResultTable>();
 
-        public CustomCircuit(int numOfPins) : base(numOfPins, "TEST")
+        public CustomCircuit(int numOfInPins, int numOfOutPins) : base(numOfInPins, numOfOutPins, "TEST")
         {
             Inputs = new List<Input>();
-            Inputs.Add(new Input());
-            Inputs.Add(new Input());
-            Output = new Output();
+            for(int i = 0; i < numOfInPins; ++i)
+            {
+                Inputs.Add(new Input());
+            }
+            Outputs = new List<Output>(numOfOutPins);
+            for (int i = 0; i < numOfOutPins; ++i)
+            {
+                Outputs.Add(new Output());
+            }
         }
 
-        public CustomCircuit(string inName, List<Input> inputs, Output output, List<CircuitBase> circuits,
+        public CustomCircuit(string inName, List<Input> inputs, List<Output> outputs, List<CircuitBase> circuits,
             List<Wire> wires)
-            : base(inputs.Count, inName)
+            : base(inputs.Count, outputs.Count, inName)
         {
-            Output = output;
+            Outputs = outputs;
             Inputs = inputs;
             Circuits = circuits;
             Wires = wires;
@@ -38,12 +44,12 @@ namespace LogicGates.Gates
 
         public override CircuitBase GetInstance(Point pos)
         {
-            var res = new CustomCircuit(this.Inputs.Count);
+            var res = new CustomCircuit(this.Inputs.Count, this.Outputs.Count);
             res.Name = this.Name;
             res.Wires = this.Wires;
             res.Inputs = this.Inputs;
             res.Circuits = this.Circuits;
-            res.Output = this.Output;
+            res.Outputs = this.Outputs;
 
             return res;
         }
@@ -65,12 +71,13 @@ namespace LogicGates.Gates
             
             for(int i = 0; i < Math.Pow(2, InputPins.Count); ++i)
             {
+                var bin = Convert.ToString(i, 2).PadLeft(this.Inputs.Count, '0');
                 for (int j = 0; j < this.Inputs.Count; ++j)
                 {
-                    var bin = Convert.ToString(i, 2).PadLeft(this.Inputs.Count, '0');
-                    InputPins[j].SetStatus(bin[j] == '1' ? true : false);
+                    InputPins[j].SetStatus(bin[bin.Length - j - 1] == '1' ? true : false);
                 }
-                Res.Results.Add(i, this.Run());
+                var runres = this.Run();
+                Res.Results.Add(i, runres);
             }
 
             PrecalcTable.Add(this.Name, Res);
@@ -85,7 +92,12 @@ namespace LogicGates.Gates
                 {
                     inSum += InputPins[i].GetStatus() ? (int)Math.Pow(2, i) : 0;
                 }
-                OutputPin.SetStatus(PrecalcTable[this.Name].Results[inSum] == 1 ? true : false);
+                for (int i = 0; i < Outputs.Count; ++i)
+                {
+                    var result = Convert.ToString(PrecalcTable[this.Name].Results[inSum], 2).PadLeft(Outputs.Count, '0');
+                    OutputPins[i].SetStatus(result[result.Length - i - 1] == '1' ? true : false);
+                }
+                
                 return -1;
             }
             else
@@ -93,10 +105,14 @@ namespace LogicGates.Gates
                 for (int i = 0; i < Inputs.Count; ++i)
                 {
                     Inputs[i].InputPins[0].SetStatus(InputPins[i].GetStatus());
-                    OutputPin.SetStatus(Output.OutputPin.GetStatus());
                 }
-
-                return OutputPin.GetStatus() ? 1 : 0;
+                var res = 0;
+                for (int i = 0; i < Outputs.Count; ++i)
+                {
+                    OutputPins[i].SetStatus(Outputs[i].OutputPins[0].GetStatus());
+                    res += OutputPins[i].GetStatus() ? (int)Math.Pow(2, i) : 0;
+                }
+                return res;
             }
         }
 

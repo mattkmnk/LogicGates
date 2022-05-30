@@ -9,12 +9,12 @@ namespace LogicGates.Gates
 {
     public class NOT : CircuitBase
     {
-        public NOT() : base(1, "NOT")
+        public NOT() : base(1, 1, "NOT")
         {
 
         }
 
-        public NOT(Point pos) : base(1, "NOT")
+        public NOT(Point pos) : base(1, 1, "NOT")
         {
 
         }
@@ -29,10 +29,10 @@ namespace LogicGates.Gates
             var res = !InputPins[0].GetStatus();
             if (res != Status)
             {
-                OutputPin.SetStatus(res);
+                OutputPins[0].SetStatus(res);
                 Status = res;
             }
-            return OutputPin.GetStatus() ? 1 : 0;
+            return OutputPins[0].GetStatus() ? 1 : 0;
         }
     }
 }

@@ -12,27 +12,27 @@ namespace LogicGates.Gates
     public class Input : CircuitBase
     {
 
-        public Input() : base(1, "I")
+        public Input() : base(1, 1, "I")
         {
             this.Size = new Size(40, 20);
             InputPins.Add(new InputPin(this.Position, this));
-            OutputPin = new OutputPin(new Point(20, 0));
+            OutputPins.Add(new OutputPin(new Point(this.Position.X + 20, 0)));
         }
 
-        public Input(InputPin input) : base(1, "I")
+        public Input(InputPin input) : base(1, 1, "I")
         {
             this.Size = new Size(40, 20);
             input.ParentGate = this;
             InputPins.Add(input);
-            OutputPin = new OutputPin(new Point(20, 0));
+            OutputPins.Add(new OutputPin(new Point(20, 0)));
         }
 
-        public Input(Point pos) : base(1, "I")
+        public Input(Point pos)
         {
             this.Position = pos;
             this.Size = new Size(40, 20);
-            InputPins.Add(new InputPin(this.Position, this));
-            OutputPin = new OutputPin(new Point(20, 0));
+            InputPins.Add(new InputPin(new Point(0, 0), this));
+            OutputPins.Add(new OutputPin(new Point(20, 0)));
         }
 
         public override CircuitBase GetInstance(Point pos)
@@ -42,9 +42,10 @@ namespace LogicGates.Gates
 
         public override int Run()
         {
-            OutputPin.SetStatus(InputPins[0].GetStatus());
             this.Status = InputPins[0].GetStatus();
-            return OutputPin.GetStatus() ? 1 : 0;
+            OutputPins[0].SetStatus(this.Status);
+            return OutputPins[0].GetStatus() ? 1 : 0;
+            
         }
     }
 }

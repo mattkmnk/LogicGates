@@ -82,6 +82,7 @@ namespace LogicGates.Utils
             while (dataReader.Read())
             {
                 int inputCount = 0;
+                int OutputCount = 0;
                 string name = dataReader.GetValue(0) as string;
                 SqlXml doc = dataReader.GetSqlXml(2);
                 var docReader = doc.CreateReader();
@@ -98,9 +99,14 @@ namespace LogicGates.Utils
                             docReader.Read();
                             inputCount = Convert.ToInt32(docReader.Value);
                         }
+                        if (elementName == "OutputCount")
+                        {
+                            docReader.Read();
+                            OutputCount = Convert.ToInt32(docReader.Value);
+                        }
                     }
                 }
-                var gate = new CustomCircuit(Convert.ToInt32(inputCount));
+                var gate = new CustomCircuit(Convert.ToInt32(inputCount), Convert.ToInt32(OutputCount));
                 gate.Name = name;
 
                 gates.Add(gate);
@@ -129,7 +135,8 @@ namespace LogicGates.Utils
             while (dataReader.Read())
             {
                 int inputCount = 0;
-                if(dataReader.GetValue(0).ToString() != name)
+                int outputCount = 0;
+                if (dataReader.GetValue(0).ToString() != name)
                 {
                     continue;
                 }
@@ -152,6 +159,11 @@ namespace LogicGates.Utils
                             docReader.Read();
                             inputCount = Convert.ToInt32(docReader.Value);
                         }
+                        else if (elementName == "OutputCount")
+                        {
+                            docReader.Read();
+                            outputCount = Convert.ToInt32(docReader.Value);
+                        }
                         else if (elementName == "Case")
                         {
                             docReader.Read();
@@ -167,6 +179,7 @@ namespace LogicGates.Utils
                 }
             }
 
+            
             command.Dispose();
             cnn.Close();
 

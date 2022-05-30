@@ -138,8 +138,13 @@ namespace LogicGates
             XmlDocument doc = new XmlDocument();
             doc.LoadXml($"<Circuit></Circuit>");
             XmlElement InputCount = doc.CreateElement("InputCount");
-            InputCount.InnerText = gate.NumOfInputPins.ToString();
+            InputCount.InnerText = gate.InputsCount.ToString();
+
+            XmlElement OutputCount = doc.CreateElement("OutputCount");
+            OutputCount.InnerText = gate.OutputsCount.ToString();
+
             doc.DocumentElement.AppendChild(InputCount);
+            doc.DocumentElement.AppendChild(OutputCount);
             for(int i = 0; i < gate.GetResultTable(name).Results.Count; ++i)
             {
                 XmlElement newElem = doc.CreateElement("Case");

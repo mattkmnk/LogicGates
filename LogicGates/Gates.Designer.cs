@@ -36,7 +36,9 @@ namespace LogicGates
             this.CircuitName_TextBox = new System.Windows.Forms.TextBox();
             this.NumOfInputs_NumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
+            this.NumOfOutputs_NumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.NumOfInputs_NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumOfOutputs_NumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // GatesPanel
@@ -88,6 +90,14 @@ namespace LogicGates
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.LGStore_Click);
             // 
+            // NumOfOutputs_NumericUpDown
+            // 
+            this.NumOfOutputs_NumericUpDown.Location = new System.Drawing.Point(50, 659);
+            this.NumOfOutputs_NumericUpDown.Name = "NumOfOutputs_NumericUpDown";
+            this.NumOfOutputs_NumericUpDown.Size = new System.Drawing.Size(32, 20);
+            this.NumOfOutputs_NumericUpDown.TabIndex = 6;
+            this.NumOfOutputs_NumericUpDown.ValueChanged += new System.EventHandler(this.NumOfOutputs_NumericUpDown_ValueChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -95,6 +105,7 @@ namespace LogicGates
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.ClientSize = new System.Drawing.Size(1144, 681);
+            this.Controls.Add(this.NumOfOutputs_NumericUpDown);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.NumOfInputs_NumericUpDown);
             this.Controls.Add(this.CircuitName_TextBox);
@@ -104,6 +115,7 @@ namespace LogicGates
             this.Name = "MainWindow";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.NumOfInputs_NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NumOfOutputs_NumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,6 +127,7 @@ namespace LogicGates
         private System.Windows.Forms.TextBox CircuitName_TextBox;
         private System.Windows.Forms.NumericUpDown NumOfInputs_NumericUpDown;
         private Button button1;
+        private NumericUpDown NumOfOutputs_NumericUpDown;
     }
 }
 

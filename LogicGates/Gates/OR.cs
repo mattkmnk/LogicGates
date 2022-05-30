@@ -10,12 +10,12 @@ namespace LogicGates.Gates
 {
     class OR : CircuitBase
     {
-        public OR() : base(2, "OR")
+        public OR() : base(2, 1, "OR")
         {
 
         }
 
-        public OR(Point pos) : base(2, "OR")
+        public OR(Point pos) : base(2, 1, "OR")
         {
 
         }
@@ -30,10 +30,10 @@ namespace LogicGates.Gates
             var res = InputPins[0].GetStatus() || InputPins[1].GetStatus();
             if (res != Status)
             {
-                OutputPin.SetStatus(res);
+                OutputPins[0].SetStatus(res);
                 Status = res;
             }
-            return OutputPin.GetStatus() ? 1 : 0;
+            return OutputPins[0].GetStatus() ? 1 : 0;
         }
     }
 }
