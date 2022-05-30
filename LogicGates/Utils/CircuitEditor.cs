@@ -157,15 +157,5 @@ namespace LogicGates.Utils
             }
         }
 
-        public void Testing()
-        {
-            string res = "";
-            foreach (var val in Map)
-            {
-                res += $"{val} at ({val.Position.X}, {val.Position.Y})\n";
-            }
-            res += $"This form size: {Output.Position.X} x {Output.Position.Y}";
-            MessageBox.Show(res);
-        }
     }
 }

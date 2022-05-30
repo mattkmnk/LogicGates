@@ -20,20 +20,30 @@ namespace LogicGates
     public partial class LGStore : Form
     {
         StorageManager manager;
+        List<CircuitBase> gates;
+        List<CircuitBase> dbGates;
+
         public event GateAddedHandler GateAdded;
 
         public LGStore(List<CircuitBase> gates)
         {
             InitializeComponent();
-
-            LoadGates(gates, LoadedGates);
+            this.gates = gates;
 
             manager = new StorageManager();
+            dbGates = new List<CircuitBase>();
 
-            var dbGates = new List<CircuitBase>();
             dbGates = manager.LoadGatesFromDB();
 
+            LoadPanels();
+        }
+
+        private void LoadPanels()
+        {
+            ImportGates.Controls.Clear();
             LoadGates(dbGates, ImportGates);
+            LoadedGates.Controls.Clear();
+            LoadGates(gates, LoadedGates);
         }
 
         private void LoadGates(List<CircuitBase> gates, Panel panel)
@@ -55,7 +65,7 @@ namespace LogicGates
                 }
                 else
                 {
-                    btn.MouseDown += Btn_MouseDownLoadFromDB;
+                    btn.MouseDown += Btn_MouseDownFromDB;
                 }
                 
                 panel.Controls.Add(btn);
@@ -63,23 +73,43 @@ namespace LogicGates
             }
         }
 
-        private void Btn_MouseDownLoadFromDB(object sender, MouseEventArgs e)
+        private void Btn_MouseDownFromDB(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip cm = new ContextMenuStrip();
                 ToolStripMenuItem SaveToDB = new ToolStripMenuItem("Load From DB");
-                SaveToDB.Click += (sender2, e2) => FromDB(sender2, e2, sender as BlueprintButton);
-
+                SaveToDB.Click += (sender2, e2) => LoadFromDB(sender2, e2, sender as BlueprintButton);
+                ToolStripMenuItem DeleteFromDB = new ToolStripMenuItem("Delete");
+                DeleteFromDB.Click += (sender2, e2) => Delete(sender2, e2, sender as BlueprintButton);
                 cm.Items.Add(SaveToDB);
+                cm.Items.Add(DeleteFromDB);
                 ((BlueprintButton)sender).ContextMenuStrip = cm;
             }
         }
 
-        private void FromDB(object sender2, EventArgs e2, BlueprintButton blueprintButton)
+        private void Delete(object sender2, EventArgs e2, BlueprintButton blueprintButton)
+        {
+            var gate = blueprintButton.GetGate() as CustomCircuit;
+            var name = gate.GetName();
+
+            manager.Delete(name);
+            dbGates = manager.LoadGatesFromDB();
+            LoadPanels();
+        }
+
+        private void LoadFromDB(object sender2, EventArgs e2, BlueprintButton blueprintButton)
         {
             GateAddedHandler handler = GateAdded;
-            handler?.Invoke(blueprintButton.GetGate() as CustomCircuit);
+            var gate = blueprintButton.GetGate() as CustomCircuit;
+            var res = manager.GetPrecalcTable(gate.GetName());
+            if (gate.IsPrecalculated(gate.GetName()))
+            {
+                return;
+            }
+            gate.SetPrecalculatedTable(gate.GetName(), res);
+            handler?.Invoke(gate);
+            LoadPanels();
         }
 
         private void Btn_MouseDownSaveToDB(object sender, MouseEventArgs e)
@@ -99,6 +129,11 @@ namespace LogicGates
         {
             var gate = blueprintButton.GetGate() as CustomCircuit;
             string name = gate.GetName();
+            if (!gate.IsPrecalculated(name))
+            {
+                gate.PrecalculateValues();
+            }
+            
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml($"<Circuit></Circuit>");
@@ -120,6 +155,8 @@ namespace LogicGates
             doc.PreserveWhitespace = true;
             doc.Save($"{name}.xml");
             manager.Save(name, doc);
+            dbGates = manager.LoadGatesFromDB();
+            LoadPanels();
         }
     }
 }

@@ -30,12 +30,41 @@ namespace LogicGates.Utils
             var adapter = new SqlDataAdapter();
 
             adapter.InsertCommand = new SqlCommand(query, cnn);
-            adapter.InsertCommand.ExecuteNonQuery();
+            try
+            {
+                adapter.InsertCommand.ExecuteNonQuery();
+            } catch (Exception)
+            {
+
+            }
+            
 
             command.Dispose();
             cnn.Close();
+        }
 
-            LoadGatesFromDB();
+        public void Delete(string name)
+        {
+            SqlConnection cnn = new SqlConnection(connectionString);
+            cnn.Open();
+
+            string query = $"DELETE FROM GatesTable WHERE Name = '{name}'";
+            var command = new SqlCommand(query, cnn);
+            var adapter = new SqlDataAdapter();
+
+            adapter.InsertCommand = new SqlCommand(query, cnn);
+            try
+            {
+                adapter.InsertCommand.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+            }
+
+
+            command.Dispose();
+            cnn.Close();
         }
 
         public List<CircuitBase> LoadGatesFromDB()
@@ -64,15 +93,66 @@ namespace LogicGates.Utils
                     if(docReader.NodeType == XmlNodeType.Element)
                     {
                         string elementName = docReader.LocalName;
-                        if(elementName == "Circuit")
-                        {
-                            docReader.Read();
-                            elementName = docReader.LocalName;
-                        } else if (elementName == "InputCount")
+                        if (elementName == "InputCount")
                         {
                             docReader.Read();
                             inputCount = Convert.ToInt32(docReader.Value);
-                        } else if(elementName == "Case")
+                        }
+                    }
+                }
+                var gate = new CustomCircuit(Convert.ToInt32(inputCount));
+                gate.Name = name;
+
+                gates.Add(gate);
+            }
+
+            command.Dispose();
+            cnn.Close();
+
+            return gates;
+        }
+
+        public ResultTable GetPrecalcTable(string name)
+        {
+            var res = new ResultTable();
+
+            SqlConnection cnn = new SqlConnection(connectionString);
+            cnn.Open();
+
+            var gates = new List<CircuitBase>();
+
+            var query = "SELECT * FROM GatesTable";
+            var command = new SqlCommand(query, cnn);
+
+            var dataReader = command.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                int inputCount = 0;
+                if(dataReader.GetValue(0).ToString() != name)
+                {
+                    continue;
+                }
+                SqlXml doc = dataReader.GetSqlXml(2);
+                var docReader = doc.CreateReader();
+                docReader.MoveToContent();
+
+                while (docReader.Read())
+                {
+                    if (docReader.NodeType == XmlNodeType.Element)
+                    {
+                        string elementName = docReader.LocalName;
+                        if (elementName == "Circuit")
+                        {
+                            docReader.Read();
+                            elementName = docReader.LocalName;
+                        }
+                        else if (elementName == "InputCount")
+                        {
+                            docReader.Read();
+                            inputCount = Convert.ToInt32(docReader.Value);
+                        }
+                        else if (elementName == "Case")
                         {
                             docReader.Read();
                             docReader.Read();
@@ -85,17 +165,12 @@ namespace LogicGates.Utils
                         }
                     }
                 }
-                var gate = new CustomCircuit(Convert.ToInt32(inputCount));
-                gate.Name = name;
-                
-                gate.SetPrecalculatedTable(name, res);
-                gates.Add(gate);
             }
 
             command.Dispose();
             cnn.Close();
 
-            return gates;
+            return res;
         }
     }
 }

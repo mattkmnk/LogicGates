@@ -114,11 +114,6 @@ namespace LogicGates
             MessageBox.Show($"{res}");
         }
 
-        private void TestButton_Click(object sender, EventArgs e)
-        {
-            CircuitEdit.Testing();
-        }
-
         private void SaveCircuit_button_Click(object sender, EventArgs e)
         {
             var newCircuit = CircuitEdit.Save();
