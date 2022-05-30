@@ -20,7 +20,7 @@ namespace LogicGates.Gates
             this.BackColor = Color.White;
             this.Text = Gate.GetName();
             this.TextAlign = ContentAlignment.MiddleCenter;
-            this.Size = new Size(Gate.Size.Width, Gate.Size.Height);
+            this.Size = new Size(Gate.GateSize.Width, Gate.GateSize.Height);
             this.Location = pos;
             
             foreach(var pin in Gate.InputPins)

@@ -95,6 +95,8 @@ namespace LogicGates.Utils
             if (IsWiring)
             {
                 WiringTo = sender as InputPin;
+                if(WiringTo.ParentGate == WiringFrom.ParentGate)
+                    return;
                 var wire = new Wire(WiringFrom, WiringTo);
                 WiringFrom.SetWire(wire);
                 Wires.Add(wire);
@@ -106,7 +108,7 @@ namespace LogicGates.Utils
 
                 Redraw();
             }
-            else
+            else if(!((sender as InputPin).ParentGate is Output))
             {
                 (sender as InputPin).SwitchStatus();
             }

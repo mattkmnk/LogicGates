@@ -14,25 +14,25 @@ namespace LogicGates.Gates
 
         public Input() : base(1, 1, "I")
         {
-            this.Size = new Size(40, 20);
+            this.GateSize = new Size(40, 20);
             InputPins.Add(new InputPin(this.Position, this));
-            OutputPins.Add(new OutputPin(new Point(this.Position.X + 20, 0)));
+            OutputPins.Add(new OutputPin(new Point(this.Position.X + 20, 0), this));
         }
 
         public Input(InputPin input) : base(1, 1, "I")
         {
-            this.Size = new Size(40, 20);
+            this.GateSize = new Size(40, 20);
             input.ParentGate = this;
             InputPins.Add(input);
-            OutputPins.Add(new OutputPin(new Point(20, 0)));
+            OutputPins.Add(new OutputPin(new Point(20, 0), this));
         }
 
         public Input(Point pos)
         {
             this.Position = pos;
-            this.Size = new Size(40, 20);
+            this.GateSize = new Size(40, 20);
             InputPins.Add(new InputPin(new Point(0, 0), this));
-            OutputPins.Add(new OutputPin(new Point(20, 0)));
+            OutputPins.Add(new OutputPin(new Point(20, 0), this));
         }
 
         public override CircuitBase GetInstance(Point pos)

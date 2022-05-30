@@ -12,25 +12,27 @@ namespace LogicGates.Gates
     public abstract class CircuitBase
     {
         public Point Position { get; set; }
-        public string Name;
+        public string Name { get; set; }
         public int InputsCount { get; set; }
         public int OutputsCount { get; set; }
-        public bool Status = false;
+        public bool Status { get; set; }
         public List<InputPin> InputPins { get; set; }
         public List<OutputPin> OutputPins { get; set; }
-        public Size Size;
-        protected List<Input> Relays = new List<Input>();
+        public Size GateSize { get; set; }
 
         public CircuitBase()
         {
+            Status = false;
             InputPins = new List<InputPin>();
             OutputPins = new List<OutputPin>();
+            GateSize = new Size();
         }
 
         public CircuitBase(int inPins, int outPins, string inName)
         {
-            Size.Width = 80;
-            Size.Height = inPins > outPins ? inPins * 20 : outPins * 20;
+            var Width = 80;
+            var Height = inPins > outPins ? inPins * 20 : outPins * 20;
+            GateSize = new Size(Width, Height);
             InputsCount = inPins;
             OutputsCount = outPins;
             Name = inName;
@@ -47,7 +49,7 @@ namespace LogicGates.Gates
             }
             else
             {
-                var h = (Size.Height - (20 * InputsCount)) / 2;
+                var h = (GateSize.Height - (20 * InputsCount)) / 2;
                 for (int i = 0; i < InputsCount; ++i)
                 {
                     InputPins.Add(new InputPin(new Point(this.Position.X, h), this));
@@ -59,15 +61,15 @@ namespace LogicGates.Gates
             {
                 for (int i = 0; i < OutputsCount; ++i)
                 {
-                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, this.Position.Y + i * 20)));
+                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, this.Position.Y + i * 20), this));
                 }
             }
             else
             {
-                var h = (Size.Height - (20 * OutputsCount)) / 2;
+                var h = (GateSize.Height - (20 * OutputsCount)) / 2;
                 for (int i = 0; i < OutputsCount; ++i)
                 {
-                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, h)));
+                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, h), this));
                     h += 20;
                 }
             }

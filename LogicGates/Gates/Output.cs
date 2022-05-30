@@ -13,17 +13,17 @@ namespace LogicGates.Gates
 
         public Output() : base(1, 1, "O")
         {
-            this.Size = new Size(40, 20);
+            this.GateSize = new Size(40, 20);
             InputPins.Add(new InputPin(new Point(0, 0), this));
-            OutputPins.Add(new OutputPin(new Point(20, 0)));
+            OutputPins.Add(new OutputPin(new Point(20, 0), this));
         }
 
         public Output(Point pos)
         {
             this.Position = pos;
-            this.Size = new Size(40, 20);
+            this.GateSize = new Size(40, 20);
             InputPins.Add(new InputPin(new Point(0, 0), this));
-            OutputPins.Add(new OutputPin(new Point(20, 0)));
+            OutputPins.Add(new OutputPin(new Point(20, 0), this));
         }
 
         public override CircuitBase GetInstance(Point pos)

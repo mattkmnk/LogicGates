@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicGates.Gates;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace LogicGates.Utils
         bool Status;
         List<Wire> Wires = new List<Wire>();
 
-        public OutputPin(Point pos)
+        public OutputPin(Point pos, CircuitBase gate)
         {
             SetStatus(false);
+            this.ParentGate = gate;
 
             this.Size = new Size(20, 20);
             this.Location = pos;

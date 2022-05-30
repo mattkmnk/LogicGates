@@ -37,6 +37,8 @@ namespace LogicGates
             this.NumOfInputs_NumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.NumOfOutputs_NumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.NumOfInputs_NumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumOfOutputs_NumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -50,24 +52,26 @@ namespace LogicGates
             // 
             // SaveCircuit_button
             // 
-            this.SaveCircuit_button.Location = new System.Drawing.Point(790, 659);
+            this.SaveCircuit_button.Location = new System.Drawing.Point(790, 660);
             this.SaveCircuit_button.Name = "SaveCircuit_button";
             this.SaveCircuit_button.Size = new System.Drawing.Size(74, 21);
             this.SaveCircuit_button.TabIndex = 2;
-            this.SaveCircuit_button.Text = "Save";
+            this.SaveCircuit_button.Text = "Save as";
             this.SaveCircuit_button.UseVisualStyleBackColor = true;
             this.SaveCircuit_button.Click += new System.EventHandler(this.SaveCircuit_button_Click);
             // 
             // CircuitName_TextBox
             // 
-            this.CircuitName_TextBox.Location = new System.Drawing.Point(870, 659);
+            this.CircuitName_TextBox.BackColor = System.Drawing.Color.DarkGray;
+            this.CircuitName_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CircuitName_TextBox.Location = new System.Drawing.Point(870, 660);
             this.CircuitName_TextBox.Name = "CircuitName_TextBox";
             this.CircuitName_TextBox.Size = new System.Drawing.Size(100, 20);
             this.CircuitName_TextBox.TabIndex = 3;
             // 
             // NumOfInputs_NumericUpDown
             // 
-            this.NumOfInputs_NumericUpDown.Location = new System.Drawing.Point(12, 659);
+            this.NumOfInputs_NumericUpDown.Location = new System.Drawing.Point(68, 660);
             this.NumOfInputs_NumericUpDown.Name = "NumOfInputs_NumericUpDown";
             this.NumOfInputs_NumericUpDown.Size = new System.Drawing.Size(32, 20);
             this.NumOfInputs_NumericUpDown.TabIndex = 4;
@@ -92,11 +96,29 @@ namespace LogicGates
             // 
             // NumOfOutputs_NumericUpDown
             // 
-            this.NumOfOutputs_NumericUpDown.Location = new System.Drawing.Point(50, 659);
+            this.NumOfOutputs_NumericUpDown.Location = new System.Drawing.Point(173, 660);
             this.NumOfOutputs_NumericUpDown.Name = "NumOfOutputs_NumericUpDown";
             this.NumOfOutputs_NumericUpDown.Size = new System.Drawing.Size(32, 20);
             this.NumOfOutputs_NumericUpDown.TabIndex = 6;
             this.NumOfOutputs_NumericUpDown.ValueChanged += new System.EventHandler(this.NumOfOutputs_NumericUpDown_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label1.Location = new System.Drawing.Point(21, 662);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 19);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Inputs:";
+            // 
+            // label2
+            // 
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.label2.Location = new System.Drawing.Point(119, 662);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 19);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Outputs:";
             // 
             // MainWindow
             // 
@@ -105,6 +127,8 @@ namespace LogicGates
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.ClientSize = new System.Drawing.Size(1144, 681);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.NumOfOutputs_NumericUpDown);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.NumOfInputs_NumericUpDown);
@@ -128,6 +152,8 @@ namespace LogicGates
         private System.Windows.Forms.NumericUpDown NumOfInputs_NumericUpDown;
         private Button button1;
         private NumericUpDown NumOfOutputs_NumericUpDown;
+        private Label label1;
+        private Label label2;
     }
 }
 

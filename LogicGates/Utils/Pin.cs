@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicGates.Gates;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace LogicGates.Utils
 {
     public abstract class Pin : Button
     {
+        public CircuitBase ParentGate;
+
         public abstract bool GetStatus();
 
         public abstract void SetStatus(bool status);
