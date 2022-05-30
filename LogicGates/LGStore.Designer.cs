@@ -36,6 +36,7 @@
             // 
             // LoadedGates
             // 
+            this.LoadedGates.AutoScroll = true;
             this.LoadedGates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.LoadedGates.Location = new System.Drawing.Point(12, 38);
             this.LoadedGates.Name = "LoadedGates";
@@ -44,6 +45,7 @@
             // 
             // ImportGates
             // 
+            this.ImportGates.AutoScroll = true;
             this.ImportGates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ImportGates.Location = new System.Drawing.Point(237, 38);
             this.ImportGates.Name = "ImportGates";
@@ -82,19 +84,8 @@
             this.Controls.Add(this.LoadedGates);
             this.Name = "LGStore";
             this.Text = "LGStore";
+            this.Leave += new System.EventHandler(this.LGStore_Leave);
             this.ResumeLayout(false);
-
-            LoadedGates.AutoScroll = false;
-            LoadedGates.HorizontalScroll.Enabled = false;
-            LoadedGates.HorizontalScroll.Visible = false;
-            LoadedGates.HorizontalScroll.Maximum = 0;
-            LoadedGates.AutoScroll = true;
-
-            ImportGates.AutoScroll = false;
-            ImportGates.HorizontalScroll.Enabled = false;
-            ImportGates.HorizontalScroll.Visible = false;
-            ImportGates.HorizontalScroll.Maximum = 0;
-            ImportGates.AutoScroll = true;
 
         }
 

@@ -14,16 +14,23 @@ namespace LogicGates.Utils
     public class StorageManager
     {
         string connectionString;
+        SqlConnection cnn;
 
         public StorageManager()
         {
             connectionString = @"Data Source=DESKTOP-SVHD06S\MSSQLSERVER01;Initial Catalog=Gates;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            cnn = new SqlConnection(connectionString);
+            cnn.Open();
+        }
+
+        public void CloseConnection()
+        {
+            cnn.Close();
         }
 
         public void Save(string name, XmlDocument xml)
         {
-            SqlConnection cnn = new SqlConnection(connectionString);
-            cnn.Open();
+            
 
             string query = $"INSERT INTO GatesTable (Name, Author, Gate) VALUES ('{name}', 'Matthew', '{xml.OuterXml}')";
             var command = new SqlCommand(query, cnn);
@@ -38,16 +45,11 @@ namespace LogicGates.Utils
 
             }
             
-
             command.Dispose();
-            cnn.Close();
         }
 
         public void Delete(string name)
         {
-            SqlConnection cnn = new SqlConnection(connectionString);
-            cnn.Open();
-
             string query = $"DELETE FROM GatesTable WHERE Name = '{name}'";
             var command = new SqlCommand(query, cnn);
             var adapter = new SqlDataAdapter();
@@ -64,13 +66,10 @@ namespace LogicGates.Utils
 
 
             command.Dispose();
-            cnn.Close();
         }
 
         public List<CircuitBase> LoadGatesFromDB()
         {
-            SqlConnection cnn = new SqlConnection(connectionString);
-            cnn.Open();
 
             var gates = new List<CircuitBase>();
 
@@ -113,7 +112,7 @@ namespace LogicGates.Utils
             }
 
             command.Dispose();
-            cnn.Close();
+            dataReader.Close();
 
             return gates;
         }
@@ -121,9 +120,6 @@ namespace LogicGates.Utils
         public ResultTable GetPrecalcTable(string name)
         {
             var res = new ResultTable();
-
-            SqlConnection cnn = new SqlConnection(connectionString);
-            cnn.Open();
 
             var gates = new List<CircuitBase>();
 
@@ -181,8 +177,7 @@ namespace LogicGates.Utils
 
             
             command.Dispose();
-            cnn.Close();
-
+            dataReader.Close();
             return res;
         }
     }

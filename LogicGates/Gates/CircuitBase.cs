@@ -47,36 +47,11 @@ namespace LogicGates.Gates
             }
             else
             {
-                if(InputsCount % 2 == 0)
+                var h = (Size.Height - (20 * InputsCount)) / 2;
+                for (int i = 0; i < InputsCount; ++i)
                 {
-                    var h = this.Size.Height + 20 * (InputsCount / 2);
-
-                    for (int i = 0; i < InputsCount; ++i)
-                    {
-                        InputPins.Add(new InputPin(new Point(this.Position.X, h), this));
-                        h += 20;
-                    }
-                }else
-                {
-                    if (InputsCount % 2 == 0)
-                    {
-                        var h = 20 * (InputsCount / 2);
-
-                        for (int i = 0; i < InputsCount; ++i)
-                        {
-                            InputPins.Add(new InputPin(new Point(this.Position.X, h), this));
-                            h += 20;
-                        }
-                    }
-                    else
-                    {
-                        var h = (Size.Height - (20 * InputsCount)) / 2;
-                        for (int i = 0; i < InputsCount; ++i)
-                        {
-                            InputPins.Add(new InputPin(new Point(this.Position.X, h), this));
-                            h += 20;
-                        }
-                    }
+                    InputPins.Add(new InputPin(new Point(this.Position.X, h), this));
+                    h += 20;
                 }
             }
 
@@ -89,24 +64,11 @@ namespace LogicGates.Gates
             }
             else
             {
-                if (OutputsCount % 2 == 0)
+                var h = (Size.Height - (20 * OutputsCount)) / 2;
+                for (int i = 0; i < OutputsCount; ++i)
                 {
-                    var h = 20 * (OutputsCount / 2);
-
-                    for (int i = 0; i < OutputsCount; ++i)
-                    {
-                        OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, h)));
-                        h += 20;
-                    }
-                }
-                else
-                {
-                    var h = (Size.Height - (20 * OutputsCount))/2;
-                    for (int i = 0; i < OutputsCount; ++i)
-                    {
-                        OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, h)));
-                        h += 20;
-                    }
+                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, h)));
+                    h += 20;
                 }
             }
             

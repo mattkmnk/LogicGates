@@ -38,6 +38,11 @@ namespace LogicGates
             LoadPanels();
         }
 
+        private void LGStore_Leave(object sender, EventArgs e)
+        {
+            manager.CloseConnection();
+        }
+
         private void LoadPanels()
         {
             ImportGates.Controls.Clear();
@@ -163,5 +168,6 @@ namespace LogicGates
             dbGates = manager.LoadGatesFromDB();
             LoadPanels();
         }
+
     }
 }
