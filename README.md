@@ -1,6 +1,6 @@
 # LogicGates
-Simple Logic Gates Simulator
-![image](https://user-images.githubusercontent.com/34426155/172230278-f3aeaae8-4c11-421e-a713-cb60534600d6.png)
+Simple Logic Gates Simulator made with C# Windows Forms
+![image](https://user-images.githubusercontent.com/34426155/172231654-972b4a99-90d1-4435-9cb8-cff460f0c43f.png)
 
 Features:
  - Basic gates simulation
