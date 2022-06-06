@@ -9,5 +9,5 @@ Features:
  - Storing and retrieving gates from database***
 
 
-* Only precalculated values
-* TODO: storing circuits as a map of gates and wires, enabling editing
+*** Only precalculated values
+*** TODO: storing circuits as a map of gates and wires, circuit editing
