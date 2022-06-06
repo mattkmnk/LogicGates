@@ -30,7 +30,7 @@ namespace LogicGates.Gates
 
         public CircuitBase(int inPins, int outPins, string inName)
         {
-            var Width = 80;
+            var Width = inPins > 2 ? 120 : 80;
             var Height = inPins > outPins ? inPins * 20 : outPins * 20;
             GateSize = new Size(Width, Height);
             InputsCount = inPins;
@@ -61,7 +61,7 @@ namespace LogicGates.Gates
             {
                 for (int i = 0; i < OutputsCount; ++i)
                 {
-                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, this.Position.Y + i * 20), this));
+                    OutputPins.Add(new OutputPin(new Point(this.GateSize.Width - 20, this.Position.Y + i * 20), this));
                 }
             }
             else
@@ -69,7 +69,7 @@ namespace LogicGates.Gates
                 var h = (GateSize.Height - (20 * OutputsCount)) / 2;
                 for (int i = 0; i < OutputsCount; ++i)
                 {
-                    OutputPins.Add(new OutputPin(new Point(this.Position.X + 60, h), this));
+                    OutputPins.Add(new OutputPin(new Point(this.GateSize.Width - 20, h), this));
                     h += 20;
                 }
             }

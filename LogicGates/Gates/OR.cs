@@ -12,12 +12,12 @@ namespace LogicGates.Gates
     {
         public OR() : base(2, 1, "OR")
         {
-
+            GateSize = new Size(80, GateSize.Height);
         }
 
         public OR(Point pos) : base(2, 1, "OR")
         {
-
+            GateSize = new Size(80, GateSize.Height);
         }
 
         public override CircuitBase GetInstance(Point pos)

@@ -11,12 +11,12 @@ namespace LogicGates.Gates
     {
         public NOT() : base(1, 1, "NOT")
         {
-
+            GateSize = new Size(80, GateSize.Height);
         }
 
         public NOT(Point pos) : base(1, 1, "NOT")
         {
-
+            GateSize = new Size(80, GateSize.Height);
         }
 
         public override CircuitBase GetInstance(Point pos)

@@ -73,7 +73,7 @@ namespace LogicGates.Utils
 
             var gates = new List<CircuitBase>();
 
-            var query = "SELECT * FROM GatesTable";
+            var query = "SELECT * FROM GatesTable ORDER BY Name DESC";
             var command = new SqlCommand(query, cnn);
 
             var dataReader = command.ExecuteReader();
@@ -120,8 +120,6 @@ namespace LogicGates.Utils
         public ResultTable GetPrecalcTable(string name)
         {
             var res = new ResultTable();
-
-            var gates = new List<CircuitBase>();
 
             var query = "SELECT * FROM GatesTable";
             var command = new SqlCommand(query, cnn);

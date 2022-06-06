@@ -12,12 +12,12 @@ namespace LogicGates.Gates
     {
         public AND() : base(2, 1, "AND")
         {
-
+            GateSize = new Size(80, GateSize.Height);
         }
 
         public AND(Point pos) : base(2, 1, "AND")
         {
-
+            this.Position = pos;
         }
 
         public override CircuitBase GetInstance(Point pos)
