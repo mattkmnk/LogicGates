@@ -6,4 +6,8 @@ Features:
  - Basic gates simulation
  - Creating custom circuits with desired number of inputs/outputs
  - Precalculating gate results
- - ! Storing and retrieving gates from database !
+ - Storing and retrieving gates from database***
+
+
+* Only precalculated values
+* TODO: storing circuits as a map of gates and wires, enabling editing
